@@ -247,6 +247,8 @@ App.prototype.doBook = function (url, opts) {
         const fixedSearchValue12 = "(12)";
         const fixedSearchValue13 = "(13)";
         const fixedSearchValue14 = "(14)";
+        const fixedSearchValue15 = "(15)";
+        const fixedSearchValue16 = "(16)";
 
 
 
@@ -264,6 +266,8 @@ App.prototype.doBook = function (url, opts) {
         this.onSearchClick12(fixedSearchValue12);
         this.onSearchClick13(fixedSearchValue13);
         this.onSearchClick14(fixedSearchValue14);
+        this.onSearchClick13(fixedSearchValue15);
+        this.onSearchClick14(fixedSearchValue16);
 
 
 /*
@@ -1172,6 +1176,8 @@ App.prototype.doSearch11 = App.prototype.doSearchall;
 App.prototype.doSearch12 = App.prototype.doSearchall;
 App.prototype.doSearch13 = App.prototype.doSearchall;
 App.prototype.doSearch14 = App.prototype.doSearchall;
+App.prototype.doSearch15 = App.prototype.doSearchall;
+App.prototype.doSearch16 = App.prototype.doSearchall;
 
 
 App.prototype.onSearchClick1 = function (searchTerm) {
@@ -1461,7 +1467,43 @@ App.prototype.onSearchClick14 = function (searchTerm) {
     }).catch(err => this.fatal("error searching book", err));
 };
 
+App.prototype.onSearchClick15 = function (searchTerm) {
+    this.doSearch15(searchTerm).then(results => {
+        const container = this.qs(".setting-content15");
+        container.innerHTML = ""; // Очистка контейнера
 
+        results.slice(0, 20).forEach(result => {
+            let resultEl = document.createElement("div");
+            resultEl.className = "search-result";
+            let excerpt = result.excerpt.trim().replace(/^(\.\.\.|\s)+/, '');
+
+            resultEl.innerHTML = `
+                <a href="${result.cfi}" class="result-link">${excerpt}</a>
+            `;
+            resultEl.querySelector(".result-link").addEventListener("click", this.onResultClick.bind(this, result.cfi));
+            container.appendChild(resultEl);
+        });
+    }).catch(err => this.fatal("error searching book", err));
+};
+
+App.prototype.onSearchClick16 = function (searchTerm) {
+    this.doSearch16(searchTerm).then(results => {
+        const container = this.qs(".setting-content16");
+        container.innerHTML = ""; // Очистка контейнера
+
+        results.slice(0, 20).forEach(result => {
+            let resultEl = document.createElement("div");
+            resultEl.className = "search-result";
+            let excerpt = result.excerpt.trim().replace(/^(\.\.\.|\s)+/, '');
+
+            resultEl.innerHTML = `
+                <a href="${result.cfi}" class="result-link">${excerpt}</a>
+            `;
+            resultEl.querySelector(".result-link").addEventListener("click", this.onResultClick.bind(this, result.cfi));
+            container.appendChild(resultEl);
+        });
+    }).catch(err => this.fatal("error searching book", err));
+};
 
 
 
